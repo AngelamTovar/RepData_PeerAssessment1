@@ -1,11 +1,11 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
+title: "PA1_template"
+author: "Angela Tovar"
+date: "4/27/2021"
 output: html_document
-html_document: "PA1_template"
-keep_md: true
 ---
 
-
+# Reproducible Research: Peer Assessment 1
 
 ```{r, echo=FALSE, results='hide', warning=FALSE, message=FALSE}
 library(ggplot2)
@@ -36,8 +36,6 @@ stepsByDay <- tapply(actData$steps, actData$date, sum, na.rm=TRUE)
 ##### 1. Make a histogram of the total number of steps taken each day
 ```{r}
 qplot(stepsByDay, xlab='Total steps per day', ylab='Frequency using binwith 1000', binwidth=1000)
-dev.copy(png,"plot1.png", width=480, height=480)
-dev.off()
 ```
 
 ##### 2. Calculate and report the mean and median total number of steps taken per day
@@ -61,9 +59,6 @@ ggplot(data=avgStepsPerTimeBlock, aes(x=interval, y=meanSteps)) +
     geom_line() +
     xlab("5-minute interval") +
     ylab("average number of steps taken") 
-
-dev.copy(png,"plot2.png", width=480, height=480)
-dev.off()
 ```
 
 ##### 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
@@ -95,8 +90,6 @@ actDataImputed$steps <- impute(actData$steps, fun=mean)
 ```{r}
 stepsByDayImputed <- tapply(actDataImputed$steps, actDataImputed$date, sum)
 qplot(stepsByDayImputed, xlab='Total steps per day (Imputed)', ylab='Frequency using binwith 1000', binwidth=1000)
-dev.copy(png,"plot3.png", width=480, height=480)
-dev.off()
 ```
 
 ##### ... and Calculate and report the mean and median total number of steps taken per day. 
@@ -111,7 +104,7 @@ stepsByDayMedianImputed <- median(stepsByDayImputed)
 ----
 
 ## Are there differences in activity patterns between weekdays and weekends?
-##### 1. Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+##### 1. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
 ```{r}
 actDataImputed$dateType <-  ifelse(as.POSIXlt(actDataImputed$date)$wday %in% c(0,6), 'weekend', 'weekday')
@@ -126,8 +119,5 @@ ggplot(averagedActDataImputed, aes(interval, steps)) +
     facet_grid(dateType ~ .) +
     xlab("5-minute interval") + 
     ylab("average number of steps")
-
-dev.copy(png,"plot4.png", width=480, height=480)
-dev.off()
 ```
 
